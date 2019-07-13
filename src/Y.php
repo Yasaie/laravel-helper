@@ -44,4 +44,69 @@ class Y
         # finaly return last child
         return $item;
     }
+
+    /**
+     * @package flattenItems
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @param $items
+     * @param $names
+     * @param $search
+     *
+     * @return mixed
+     */
+    public static function flattenItems($items, $names, $search)
+    {
+        $output = [];
+        foreach ($items as $item) {
+            $output[$item->id] = new \stdClass();
+            $found = false;
+            foreach ($names as $name) {
+                # if get index is not set default is name
+                isset($name['get'])
+                or $name['get'] = $name['name'];
+
+                # get item value recurusive
+                $value = self::dotObject($item, $name['get']);
+                $output[$item->id]->{$name['name']} = $value;
+
+                # check if current item is searchable and change
+                # found flag if search string found in item
+                if (isset($name['visible'])
+                    and $name['visible']
+                    and preg_match("/$search/i", $value)
+                ) {
+                    $found = true;
+                }
+            }
+
+            # unset item if no result found in search
+            if (! $found) unset($output[$item->id]);
+        }
+
+        return collect($output);
+    }
+
+    /**
+     * @package paginate
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @param $items
+     * @param $current
+     * @param $perPage
+     *
+     * @return \stdClass
+     */
+    public static function paginate(&$items, $current, $perPage)
+    {
+        $items = $items instanceof \Illuminate\Support\Collection ? $items : collect($items);
+        $page = new \stdClass();
+        $page->current = $current;
+        $page->perPage = $perPage;
+        $page->items_count = count($items);
+        $page->count = (int)ceil($page->items_count / $page->perPage);
+
+        $items = $items->forPage($page->current, $page->perPage);
+        return $page;
+    }
 }
