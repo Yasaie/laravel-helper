@@ -13,7 +13,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Yasaie\\Helper": "src/"
+            "Yasaie\\Helper\\": "src/"
         }
     }
 }
