@@ -9,7 +9,6 @@
             "email": "payam.yasaie@outlook.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {},
     "autoload": {
         "psr-4": {
