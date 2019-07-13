@@ -109,4 +109,30 @@ class Y
         $items = $items->forPage($page->current, $page->perPage);
         return $page;
     }
+
+    /**
+     * @package buildTree
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @param $elements
+     * @param int $parentId
+     *
+     * @return array
+     */
+    public static function buildTree($elements, $parentId = 0)
+    {
+        $branch = array();
+
+        foreach ($elements as $element) {
+            if ($element->parent_id == $parentId) {
+                $children = self::buildTree($elements, $element->id);
+                if ($children) {
+                    $element->children = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
+    }
 }
