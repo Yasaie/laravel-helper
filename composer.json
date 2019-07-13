@@ -1,0 +1,19 @@
+{
+    "name": "yasaie/laravel-helper",
+    "description": "Helpers for laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Payam Yasaie",
+            "email": "payam.yasaie@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Yasaie\\Helper": "src/"
+        }
+    }
+}
