@@ -101,7 +101,7 @@ class Y
     {
         $items = $items instanceof \Illuminate\Support\Collection ? $items : collect($items);
         $page = new \stdClass();
-        $page->current = $current;
+        $page->current = $current ?: 1;
         $page->perPage = $perPage;
         $page->items_count = count($items);
         $page->count = (int)ceil($page->items_count / $page->perPage);
