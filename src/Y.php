@@ -10,50 +10,52 @@ namespace Yasaie\Helper;
 
 class Y
 {
+
     /**
      * @package dotObject
      * @author  Payam Yasaie <payam@yasaie.ir>
      *
      * @param $object
      * @param $dots
+     * @param bool $html
      *
-     * @return mixed
+     * @return array|string
      */
-    public static function dotObject($object, $dots)
+    public static function dotObject($object, $dots, $html = false)
     {
         # extract given dotted string to array
         $extract = explode('.', $dots);
 
-        # check if current is function
-        if (strpos($extract[0], '()')) {
-            $extract[0] = str_replace('()', '', $extract[0]);
-            $item = $object->{$extract[0]}();
+        try {
+            # check if current is function
+            if (strpos($extract[0], '()')) {
+                $extract[0] = str_replace('()', '', $extract[0]);
+                $item = $object->{$extract[0]}();
 
-        # check if current index is array
-        } elseif (isset($object[$extract[0]])) {
-            $item = $object[$extract[0]];
+            # check if current index is array
+            } elseif (isset($object[$extract[0]])) {
+                $item = $object[$extract[0]];
 
-        # check if current index is object
-        } elseif (isset($object->{$extract[0]})) {
-            $item = $object->{$extract[0]};
-
-        # check if current index is nested array/object
-        } elseif (
-            isset(current($object)[$extract[0]])
-            or isset(current($object)->$extract[0])
-        ) {
-            $text = '';
-            foreach ($object as $ob) {
-                $text .= self::dotObject($ob, $extract[0]);
+            # check if current index is object
+            } else {
+                $item = $object->{$extract[0]};
             }
-            return $text;
+        } catch(\Exception $e) {
+            # check if current index is nested array/object
+            foreach ($object as $ob) {
+                $item[] = self::dotObject($ob, $extract[0], $html);
+            }
+            # convert array to html if flag is true
+            if ($html) {
+                $item = implode('<br>' . PHP_EOL, $item);
+            }
         }
 
         # check if still has child
         if (count($extract) > 1) {
             # remove first index of object for pass to function again
             $slice = implode('.', array_slice($extract, 1));
-            return self::dotObject($item, $slice);
+            return self::dotObject($item, $slice, $html);
         }
 
         # finaly return last child
