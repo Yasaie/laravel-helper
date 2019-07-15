@@ -28,10 +28,25 @@ class Y
         if (strpos($extract[0], '()')) {
             $extract[0] = str_replace('()', '', $extract[0]);
             $item = $object->{$extract[0]}();
-        } else {
-            # check if current index is array or object
-            $item = isset($object[$extract[0]])
-                ? $object[$extract[0]] : $object->{$extract[0]};
+
+        # check if current index is array
+        } elseif (isset($object[$extract[0]])) {
+            $item = $object[$extract[0]];
+
+        # check if current index is object
+        } elseif (isset($object->{$extract[0]})) {
+            $item = $object->{$extract[0]};
+
+        # check if current index is nested array/object
+        } elseif (
+            isset(current($object)[$extract[0]])
+            or isset(current($object)->$extract[0])
+        ) {
+            $text = '';
+            foreach ($object as $ob) {
+                $text .= self::dotObject($ob, $extract[0]);
+            }
+            return $text;
         }
 
         # check if still has child
