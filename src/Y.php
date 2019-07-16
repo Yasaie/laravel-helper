@@ -148,7 +148,7 @@ class Y
      *
      * @return string
      */
-    public function makeRoute($query, $text = '', $route = null)
+    public static function makeRoute($query, $text = '', $route = null)
     {
         if (!$route) {
             $route = $query[0];
