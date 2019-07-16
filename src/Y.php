@@ -150,9 +150,9 @@ class Y
      */
     public static function makeRoute($query, $text = '', $route = null)
     {
-        if (!$route) {
-            $route = $query[0];
-            $query = array_slice($query, 1);
+        if (isset($query['route'])) {
+            $route = $query['route'];
+            unset($query['route']);
         }
         $query = http_build_query($query);
         return "<a href='" . route($route) . "/?$query'>$text</a>";
