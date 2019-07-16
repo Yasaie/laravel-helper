@@ -32,11 +32,11 @@ class Y
                 $extract[0] = str_replace('()', '', $extract[0]);
                 $item = $object->{$extract[0]}();
 
-            # check if current index is array
+                # check if current index is array
             } elseif (isset($object[$extract[0]])) {
                 $item = $object[$extract[0]];
 
-            # check if current index is object
+                # check if current index is object
             } else {
                 $item = $object->{$extract[0]};
             }
@@ -74,10 +74,11 @@ class Y
      * @param $items
      * @param $names
      * @param $search
+     * @param null $column
      *
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
-    public static function flattenItems($items, $names, $search)
+    public static function flattenItems($items, $names, $search, $column = null)
     {
         $output = [];
         foreach ($items as $item) {
@@ -94,11 +95,14 @@ class Y
 
                 # check if current item is searchable and change
                 # found flag if search string found in item
-                if (isset($name['visible'])
-                    and $name['visible']
-                    and preg_match("/$search/i", $value)
-                ) {
-                    $found = true;
+                if (!$column and isset($name['visible']) and $name['visible']) {
+                    if (preg_match("/$search/i", $value))
+                        $found = true;
+
+                    # check if column is set search only there
+                } elseif ($column and $column == $name['name']) {
+                    if (preg_match("/$search/i", $value))
+                        $found = true;
                 }
             }
 
