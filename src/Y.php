@@ -10,7 +10,6 @@ namespace Yasaie\Helper;
 
 class Y
 {
-
     /**
      * @package dotObject
      * @author  Payam Yasaie <payam@yasaie.ir>
@@ -137,5 +136,25 @@ class Y
         }
 
         return $branch;
+    }
+
+    /**
+     * @package makeRoute
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @param $query
+     * @param string $text
+     * @param null $route
+     *
+     * @return string
+     */
+    public function makeRoute($query, $text = '', $route = null)
+    {
+        if (!$route) {
+            $route = $query[0];
+            $query = array_slice($query, 1);
+        }
+        $query = http_build_query($query);
+        return "<a href='" . route($route) . "/?$query'>$text</a>";
     }
 }
