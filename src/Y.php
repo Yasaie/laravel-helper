@@ -41,13 +41,18 @@ class Y
                 $item = $object->{$extract[0]};
             }
         } catch(\Exception $e) {
-            # check if current index is nested array/object
-            foreach ($object as $ob) {
-                $item[] = self::dotObject($ob, $extract[0], $html);
-            }
-            # convert array to html if flag is true
-            if ($html) {
-                $item = implode('<br>' . PHP_EOL, $item);
+            try {
+                # check if current index is nested array/object
+                foreach ($object as $ob) {
+                    $item[] = self::dotObject($ob, $extract[0], $html);
+                }
+                # convert array to html if flag is true
+                if ($html) {
+                    $item = implode('<br>' . PHP_EOL, $item);
+                }
+            } catch (\Exception $e) {
+                # finaly return null if nothing works
+                $item = null;
             }
         }
 
