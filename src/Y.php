@@ -88,8 +88,10 @@ class Y
                 isset($name['get'])
                 or $name['get'] = $name['name'];
 
+                # check if return is string
+                $return_string = isset($name['string']) and $name['string'];
                 # get item value recurusive
-                $value = self::dotObject($item, $name['get']);
+                $value = self::dotObject($item, $name['get'], $return_string);
                 $output[$item->id]->{$name['name']} = $value;
 
                 # check if current item is searchable and change
