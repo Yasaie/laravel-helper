@@ -45,10 +45,6 @@ class Y
                 foreach ($object as $ob) {
                     $item[] = self::dotObject($ob, $extract[0], $html);
                 }
-                # convert array to html if flag is true
-                if ($html) {
-                    $item = implode('<br>' . PHP_EOL, $item);
-                }
             } catch (\Exception $e) {
                 # finaly return null if nothing works
                 $item = null;
@@ -62,6 +58,10 @@ class Y
             return self::dotObject($item, $slice, $html);
         }
 
+        # convert array to html if flag is true
+        if ($html) {
+            $item = implode('<br>' . PHP_EOL, $item);
+        }
         # finaly return last child
         return $item;
     }
