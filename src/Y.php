@@ -27,7 +27,7 @@ class Y
 
         try {
             # check if current is function
-            if (strpos($extract[0], '()')) {
+            if (strpos($extract[0], '()') and !is_array($object)) {
                 $extract[0] = str_replace('()', '', $extract[0]);
                 $item = $object->{$extract[0]}();
 
