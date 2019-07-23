@@ -59,7 +59,7 @@ class Y
         }
 
         # convert array to html if flag is true
-        if ($html) {
+        if ($html and is_array($item)) {
             $item = implode('<br>' . PHP_EOL, $item);
         }
         # finaly return last child
