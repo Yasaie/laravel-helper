@@ -120,6 +120,32 @@ class Y
     }
 
     /**
+     * @package addAndRemove
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @param $object
+     * @param $field
+     * @param $new
+     */
+    static public function addAndRemove($object, $field, $new)
+    {
+        $old = $object->pluck($field)->toArray();
+
+        $added = array_diff($new, $old);
+        $removed = array_diff($old, $new);
+
+        foreach ($added as $add) {
+            $object->create([
+                $field => $add
+            ]);
+        }
+
+        foreach ($removed as $remove) {
+            $object->where($field, $remove)->delete();
+        }
+    }
+
+    /**
      * @package buildTree
      * @author  Payam Yasaie <payam@yasaie.ir>
      *
