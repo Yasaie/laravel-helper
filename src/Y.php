@@ -140,9 +140,7 @@ class Y
             ]);
         }
 
-        foreach ($removed as $remove) {
-            $object->where($field, $remove)->delete();
-        }
+        $object->whereIn($field, $removed)->delete();
     }
 
     /**
