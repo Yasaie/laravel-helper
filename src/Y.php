@@ -50,19 +50,16 @@ class Y
                 $item = null;
             }
         }
-
         # check if still has child
         if (count($extract) > 1) {
             # remove first index of object for pass to function again
             $slice = implode('.', array_slice($extract, 1));
             return self::dotObject($item, $slice, $html);
         }
-
         # Check if it's not set return null
         if (!isset($item)) {
             $item = null;
         }
-
         # convert array to html if flag is true
         if ($html and is_array($item)) {
             $item = implode('<br>' . PHP_EOL, $item);
