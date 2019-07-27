@@ -127,6 +127,7 @@ class Y
     static public function addAndRemove($object, $field, $new)
     {
         $old = $object->pluck($field)->toArray();
+        $new = $new ?: [];
 
         $added = array_diff($new, $old);
         $removed = array_diff($old, $new);
