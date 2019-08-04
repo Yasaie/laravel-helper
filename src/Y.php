@@ -97,6 +97,7 @@ class Y
                 # found flag if search string found in item
                 if ((!isset($name['hidden'])
                         or !$name['hidden'])
+                    and !is_array($search)
                     and preg_match("/$search/i", $value)
                 ) {
                     $found = true;
