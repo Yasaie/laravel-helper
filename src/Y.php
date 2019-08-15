@@ -10,15 +10,16 @@ namespace Yasaie\Helper;
 
 class Y
 {
+
     /**
-     * @package dotObject
-     * @author  Payam Yasaie <payam@yasaie.ir>
-     *
      * @param $object
      * @param $dots
      * @param bool $html
      *
      * @return array|string
+     * @package dotObject
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
      */
     public static function dotObject($object, $dots, $html = false)
     {
@@ -39,7 +40,7 @@ class Y
             } else {
                 $item = $object->{$extract[0]};
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             try {
                 # check if current index is nested array/object
                 foreach ($object as $ob) {
@@ -69,14 +70,14 @@ class Y
     }
 
     /**
-     * @package flattenItems
-     * @author  Payam Yasaie <payam@yasaie.ir>
-     *
      * @param $items
      * @param $names
      * @param $search
      *
      * @return array|\Illuminate\Support\Collection
+     * @package flattenItems
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
      */
     public static function flattenItems($items, $names, $search)
     {
@@ -106,7 +107,7 @@ class Y
             }
 
             # unset item if no result found in search
-            if (! $found) unset($output[$item->id]);
+            if (!$found) unset($output[$item->id]);
         }
 
         if (class_exists('Illuminate\Support\Collection'))
@@ -116,12 +117,12 @@ class Y
     }
 
     /**
-     * @package addAndRemove
-     * @author  Payam Yasaie <payam@yasaie.ir>
-     *
      * @param $object
      * @param $field
      * @param $new
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @package addAndRemove
      */
     static public function addAndRemove($object, $field, $new)
     {
@@ -141,13 +142,13 @@ class Y
     }
 
     /**
-     * @package buildTree
-     * @author  Payam Yasaie <payam@yasaie.ir>
-     *
      * @param $elements
      * @param int $parentId
      *
      * @return array
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
+     * @package buildTree
      */
     public static function buildTree($elements, $parentId = 0)
     {
@@ -167,14 +168,14 @@ class Y
     }
 
     /**
-     * @package makeRoute
-     * @author  Payam Yasaie <payam@yasaie.ir>
-     *
      * @param $query
      * @param string $text
      * @param null $route
      *
      * @return string
+     * @package makeRoute
+     * @author  Payam Yasaie <payam@yasaie.ir>
+     *
      */
     public static function makeRoute($query, $text = '', $route = null)
     {
